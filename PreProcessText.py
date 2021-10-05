@@ -10,23 +10,22 @@ class PreProcessText:
         nltk.download('stopwords')
         self.lemmatizer = WordNetLemmatizer()
         self.stop_words = set(stopwords.words('english'))
-        self.punctionation = string.punctuation
+        self.punc = string.punctuation
     def lemmatize(self, text):
         split = text.split()
-        lemmatized = []
-        for word in split:
-            lemmatized.append(self.lemmatizer.lemmatize(word))
-        return rejoin_sentence(lemmatized)
+        lemmatized = [self.lemmatizer.lemmatize(word) for word in split]
+    
+        return self.rejoin_sentence(lemmatized)
 
     def is_punc(self, text):
-        if text in self.punctuation:
+        if text in self.punc:
             return True
         elif "'" in text:
             return True
         else:
             return False
     def remove_punc(self, text):
-        for punc in punctuation:
+        for punc in self.punc:
             text = text.replace(punc,"")
         return text
     def remove_stop_words(self, text):
