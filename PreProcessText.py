@@ -8,6 +8,7 @@ class PreProcessText:
     def __init__(self):
         nltk.download('wordnet')
         nltk.download('stopwords')
+        nltk.download('punkt')
         self.lemmatizer = WordNetLemmatizer()
         self.stop_words = set(stopwords.words('english'))
         self.punc = string.punctuation
@@ -35,8 +36,10 @@ class PreProcessText:
 
         filtered_sentence = [w for w in word_tokens if w not in self.stop_words]
 
-        return word_tokens, filtered_sentence
-
+        return self.rejoin_sentence(filtered_sentence)
+    def add_stop_words(self, words):
+      for w in words:
+        self.stop_words.add(w)
     def rejoin_sentence(self, word_tokens):
         sentence = ""
         total_words = len(word_tokens)
